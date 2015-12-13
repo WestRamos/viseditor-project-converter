@@ -21,8 +21,6 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoComponent;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoVisParticle;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.UsesProtoComponent;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.annotation.VisInternal;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATProperty;
 
 /**
  * Stores particle effect
@@ -30,7 +28,6 @@ import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.AT
  */
 public class VisParticle extends Component implements UsesProtoComponent {
 	private transient ParticleEffect effect;
-	@ATProperty(fieldName = "Active on start", tooltip = "Controls whether to automatically start this effect on runtime.\nIn editor, particle effect are always active.")
 	private boolean activeOnStart = true;
 
 	public VisParticle () {
@@ -45,7 +42,6 @@ public class VisParticle extends Component implements UsesProtoComponent {
 		return new ProtoVisParticle(this);
 	}
 
-	@VisInternal
 	public void updateValues (float x, float y) {
 		effect.setPosition(x, y);
 		reset();

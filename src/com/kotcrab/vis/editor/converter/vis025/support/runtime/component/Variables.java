@@ -18,7 +18,7 @@ package com.kotcrab.vis.editor.converter.vis025.support.runtime.component;
 
 import com.artemis.Component;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATStringStringMap;
+import com.kotcrab.vis.runtime.util.autotable.ATStringStringMap;
 
 /**
  * Stores user defined variables in key-value store

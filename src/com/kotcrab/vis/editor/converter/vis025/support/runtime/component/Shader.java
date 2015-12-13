@@ -22,7 +22,6 @@ import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.ShaderAsse
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoComponent;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoShader;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.UsesProtoComponent;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATSelectFile;
 import com.kotcrab.vis.runtime.assets.VisAssetDescriptor;
 import com.kotcrab.vis.runtime.util.StoresAssetDescriptor;
 
@@ -31,7 +30,6 @@ import com.kotcrab.vis.runtime.util.StoresAssetDescriptor;
  * @author Kotcrab
  */
 public class Shader extends Component implements UsesProtoComponent, StoresAssetDescriptor {
-	@ATSelectFile(fieldName = "Shader", extension = "frag", hideExtension = true, handlerAlias = "shader")
 	public ShaderAsset asset;
 	public transient ShaderProgram shader;
 

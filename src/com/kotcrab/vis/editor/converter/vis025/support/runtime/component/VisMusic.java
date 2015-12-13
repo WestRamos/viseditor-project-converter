@@ -22,16 +22,14 @@ import com.badlogic.gdx.audio.Music.OnCompletionListener;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoComponent;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoVisMusic;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.UsesProtoComponent;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATProperty;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATReflectedProperty;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATSelectFile;
+import com.kotcrab.vis.runtime.util.autotable.ATProperty;
+import com.kotcrab.vis.runtime.util.autotable.ATReflectedProperty;
 
 /**
  * Stores entity Music
  * @author Kotcrab
  */
 public class VisMusic extends Component implements UsesProtoComponent { //emulated on gwt
-	@ATSelectFile(fieldName = "Music", extension = "mp3|wav|ogg", hideExtension = false, handlerAlias = "music")
 	@ATProperty(fieldName = "Loop")
 	@ATReflectedProperty(targetType = boolean.class, getterName = "isLooping", setterName = "setLooping")
 	public transient Music music;

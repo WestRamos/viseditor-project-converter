@@ -28,7 +28,6 @@ import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.P
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.BoundsOwner;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.SizeOwner;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.UsesProtoComponent;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.annotation.VisInternal;
 
 /**
  * Text component storing all text properties.
@@ -81,7 +80,6 @@ public class VisText extends Component implements SizeOwner, BoundsOwner, UsesPr
 		return cache;
 	}
 
-	@VisInternal
 	public void updateCache (Color tint) {
 		cache.clear();
 		cache.setColor(tint);
@@ -89,7 +87,6 @@ public class VisText extends Component implements SizeOwner, BoundsOwner, UsesPr
 		dirty = false;
 	}
 
-	@VisInternal
 	public void updateBounds (Rectangle bounds) {
 		this.bounds.set(bounds);
 	}

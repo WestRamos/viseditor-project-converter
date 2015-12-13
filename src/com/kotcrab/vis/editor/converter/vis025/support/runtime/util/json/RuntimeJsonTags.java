@@ -16,39 +16,11 @@
 
 package com.kotcrab.vis.editor.converter.vis025.support.runtime.util.json;
 
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.AtlasRegionAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.BmpFontAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.MusicAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.ParticleAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.PathAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.ShaderAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.SoundAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.SpriterAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.TextureRegionAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.TtfFontAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.AssetReference;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.Invisible;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.Layer;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.Origin;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.PhysicsProperties;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.Point;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.Renderable;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.Tint;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.Transform;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.Variables;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.VisGroup;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.VisID;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.VisPolygon;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoShader;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoVisMusic;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoVisParticle;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoVisSound;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoVisSprite;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoVisSpriter;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoVisText;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.data.SceneData;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.scene.LayerCordsSystem;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.scene.SceneViewport;
+import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.*;
+import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.*;
+import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.*;
+import com.kotcrab.vis.runtime.scene.LayerCordsSystem;
+import com.kotcrab.vis.runtime.scene.SceneViewport;
 
 /** @author Kotcrab */
 public class RuntimeJsonTags {
@@ -56,7 +28,6 @@ public class RuntimeJsonTags {
 		registrar.register("String", String.class);
 		registrar.register("Class", Class.class);
 
-		registrar.register("SceneData", SceneData.class);
 		registrar.register("SceneViewport", SceneViewport.class);
 		registrar.register("LayerCordsSystem", LayerCordsSystem.class);
 

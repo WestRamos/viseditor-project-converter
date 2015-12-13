@@ -18,9 +18,9 @@ package com.kotcrab.vis.editor.converter.vis025.support.runtime.component;
 
 import com.artemis.Component;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.BodyTypeEnumNameProvider;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATEnumProperty;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATProperty;
+import com.kotcrab.vis.runtime.util.BodyTypeEnumNameProvider;
+import com.kotcrab.vis.runtime.util.autotable.ATEnumProperty;
+import com.kotcrab.vis.runtime.util.autotable.ATProperty;
 
 /** @author Kotcrab */
 public class PhysicsProperties extends Component {

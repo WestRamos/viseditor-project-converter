@@ -19,7 +19,7 @@ package com.kotcrab.vis.editor.converter.vis025.support.runtime.component;
 import com.artemis.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATVector2Array;
+import com.kotcrab.vis.runtime.util.autotable.ATVector2Array;
 
 /**
  * Stores polygon data for creating Box2d Body. Keep in mind that after physics symulation is running, values of this

@@ -21,14 +21,12 @@ import com.badlogic.gdx.audio.Sound;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoComponent;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoVisSound;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.UsesProtoComponent;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATSelectFile;
 
 /**
  * Stores single sound
  * @author Kotcrab
  */
 public class VisSound extends Component implements UsesProtoComponent {
-	@ATSelectFile(fieldName = "Sound", extension = "mp3|wav|ogg", hideExtension = false, handlerAlias = "sound")
 	public transient Sound sound;
 
 	public VisSound () {

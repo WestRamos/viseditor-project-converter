@@ -17,7 +17,7 @@
 package com.kotcrab.vis.editor.converter.vis025.support.runtime.component;
 
 import com.artemis.Component;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATProperty;
+import com.kotcrab.vis.runtime.util.autotable.ATProperty;
 
 /**
  * All renderable entities must have this component, stores entity zIndex

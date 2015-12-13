@@ -25,7 +25,6 @@ import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.Bounds
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.FlipOwner;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.SizeOwner;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.UsesProtoComponent;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.annotation.VisInternal;
 import com.kotcrab.vis.runtime.spriter.Data;
 import com.kotcrab.vis.runtime.spriter.Loader;
 import com.kotcrab.vis.runtime.spriter.Player;
@@ -53,7 +52,6 @@ public class VisSpriter extends Component implements SizeOwner, BoundsOwner, Fli
 		if (playOnStart) animationPlaying = true;
 	}
 
-	@VisInternal
 	public void updateValues (float x, float y, float rotation) {
 		player.setPosition(x, y);
 		player.setAngle(rotation);
