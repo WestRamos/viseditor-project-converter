@@ -17,6 +17,7 @@
 package com.kotcrab.vis.editor.converter.vis025.support.runtime.assets;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.kotcrab.vis.runtime.assets.VisAssetDescriptor;
 
 /**
  * Asset descriptor for shader programs

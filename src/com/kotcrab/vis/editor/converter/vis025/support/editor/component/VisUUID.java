@@ -14,15 +14,26 @@
  * limitations under the License.
  */
 
-package com.kotcrab.vis.editor.converter.vis025.support.runtime.assets;
+package com.kotcrab.vis.editor.converter.vis025.support.editor.component;
 
-import com.kotcrab.vis.runtime.assets.VisAssetDescriptor;
+import com.artemis.Component;
+import com.artemis.Entity;
+import com.artemis.World;
+
+import java.util.UUID;
 
 /**
- * Descriptors implementing this interface must reference some texture type asset for exmaple TextureRegion form TextureAtlas
+ * VisEditor UUID is managed separately than Artemis {@link World} {@link Entity} UUID.
  * @author Kotcrab
- * @see AtlasRegionAsset
- * @see TextureRegionAsset
  */
-public interface TextureAssetDescriptor extends VisAssetDescriptor {
+public class VisUUID extends Component {
+	private UUID uuid;
+
+	public VisUUID () {
+		uuid = UUID.randomUUID();
+	}
+
+	public UUID getUUID () {
+		return uuid;
+	}
 }

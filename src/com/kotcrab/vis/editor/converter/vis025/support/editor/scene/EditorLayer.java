@@ -14,12 +14,28 @@
  * limitations under the License.
  */
 
-package com.kotcrab.vis.editor.converter.vis025.support.runtime.assets;
+package com.kotcrab.vis.editor.converter.vis025.support.editor.scene;
+
+import com.kotcrab.vis.runtime.scene.LayerCordsSystem;
 
 /**
- * Classes implementing this interface references some asset. All asset descriptor must be immutable.
+ * EditorScene layer class
  * @author Kotcrab
  */
-public interface VisAssetDescriptor {
-	boolean compare (VisAssetDescriptor asset);
+public class EditorLayer {
+	public String name;
+	public int id;
+	public boolean locked = false;
+	public boolean visible = true;
+	public LayerCordsSystem cordsSystem = LayerCordsSystem.WORLD;
+
+	public EditorLayer (String name, int id) {
+		this.name = name;
+		this.id = id;
+	}
+
+	@Override
+	public String toString () {
+		return name;
+	}
 }

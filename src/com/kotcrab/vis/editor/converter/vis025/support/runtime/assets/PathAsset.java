@@ -16,7 +16,7 @@
 
 package com.kotcrab.vis.editor.converter.vis025.support.runtime.assets;
 
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.VisAssetDescriptor;
+import com.kotcrab.vis.runtime.assets.VisAssetDescriptor;
 
 /**
  * References assets only by its path, for example used to reference music, sound or particles. This class is abstract,

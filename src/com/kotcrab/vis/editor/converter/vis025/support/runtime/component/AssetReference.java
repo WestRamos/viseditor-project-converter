@@ -17,8 +17,8 @@
 package com.kotcrab.vis.editor.converter.vis025.support.runtime.component;
 
 import com.artemis.Component;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.VisAssetDescriptor;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.StoresAssetDescriptor;
+import com.kotcrab.vis.runtime.assets.VisAssetDescriptor;
+import com.kotcrab.vis.runtime.util.StoresAssetDescriptor;
 
 /**
  * Holds entity asset descriptor

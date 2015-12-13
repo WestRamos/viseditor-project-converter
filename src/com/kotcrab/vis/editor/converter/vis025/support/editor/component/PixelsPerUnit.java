@@ -14,15 +14,23 @@
  * limitations under the License.
  */
 
-package com.kotcrab.vis.editor.converter.vis025.support.runtime.assets;
+package com.kotcrab.vis.editor.converter.vis025.support.editor.component;
 
-import com.kotcrab.vis.runtime.assets.VisAssetDescriptor;
+import com.artemis.Component;
 
-/**
- * Descriptors implementing this interface must reference some texture type asset for exmaple TextureRegion form TextureAtlas
- * @author Kotcrab
- * @see AtlasRegionAsset
- * @see TextureRegionAsset
- */
-public interface TextureAssetDescriptor extends VisAssetDescriptor {
+/** @author Kotcrab */
+public class PixelsPerUnit extends Component {
+	public final float pixelsPerUnits;
+	public final float scale;
+
+	@Deprecated
+	public PixelsPerUnit () {
+		pixelsPerUnits = 0;
+		scale = 0;
+	}
+
+	public PixelsPerUnit (float pixelsPerUnit) {
+		this.pixelsPerUnits = pixelsPerUnit;
+		this.scale = 1f / pixelsPerUnit;
+	}
 }

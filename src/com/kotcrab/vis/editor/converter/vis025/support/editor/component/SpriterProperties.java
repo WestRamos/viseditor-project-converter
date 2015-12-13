@@ -14,16 +14,24 @@
  * limitations under the License.
  */
 
-package com.kotcrab.vis.editor.converter.vis025.support.runtime.properties;
+package com.kotcrab.vis.editor.converter.vis025.support.editor.component;
 
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.VisAssetDescriptor;
+import com.artemis.Component;
+import com.kotcrab.vis.runtime.util.autotable.ATProperty;
 
-/**
- * Implemented by components that stores {@link VisAssetDescriptor}. Used by VisEditor asset usage analyzer
- * to determinate whether certain asset is used.
- * @author Kotcrab
- */
-public interface StoresAssetDescriptor {
-	/** @return stored asset, may return null */
-	VisAssetDescriptor getAsset ();
+/** @author Kotcrab */
+public class SpriterProperties extends Component {
+	@ATProperty(fieldName = "Scale", min = 0.000001f)
+	public float scale;
+
+	public int animation = 0;
+
+	@ATProperty(fieldName = "Play animation on start")
+	public boolean playOnStart = false;
+	@ATProperty(fieldName = "Preview in editor")
+	public boolean previewInEditor = false;
+
+	public SpriterProperties (float scale) {
+		this.scale = scale;
+	}
 }

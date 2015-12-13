@@ -16,7 +16,7 @@
 
 package com.kotcrab.vis.editor.converter.vis025.support.runtime.util;
 
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.VisAssetDescriptor;
+import com.kotcrab.vis.runtime.assets.VisAssetDescriptor;
 
 /**
  * Throw when Entity tries to use or access asset descriptor that is unsupported for current operation

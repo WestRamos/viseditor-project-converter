@@ -19,12 +19,12 @@ package com.kotcrab.vis.editor.converter.vis025.support.runtime.component;
 import com.artemis.Component;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.ShaderAsset;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.assets.VisAssetDescriptor;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoComponent;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.proto.ProtoShader;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.StoresAssetDescriptor;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.properties.UsesProtoComponent;
 import com.kotcrab.vis.editor.converter.vis025.support.runtime.util.autotable.ATSelectFile;
+import com.kotcrab.vis.runtime.assets.VisAssetDescriptor;
+import com.kotcrab.vis.runtime.util.StoresAssetDescriptor;
 
 /**
  * Stores single shader along with it's asset descriptor

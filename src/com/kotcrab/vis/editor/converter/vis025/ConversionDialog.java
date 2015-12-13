@@ -34,7 +34,7 @@ public class ConversionDialog extends VisWindow {
 
 		VisTable pathTable = new VisTable(true);
 		pathTable.add(new VisLabel("Output folder"));
-		pathTable.add(pathField = new VisValidatableTextField("")).width(300);
+		pathTable.add(pathField = new VisValidatableTextField("F:\\Poligon\\Converter")).width(300); //TODO remove debug path
 		pathTable.add(chooseButton = new VisTextButton("Choose..."));
 
 		VisTable buttonTable = new VisTable(true);
