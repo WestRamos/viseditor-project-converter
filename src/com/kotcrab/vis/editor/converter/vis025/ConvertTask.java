@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.kotcrab.vis.editor.VersionCodes;
 import com.kotcrab.vis.editor.converter.support.vis030.editor.scene.EntityScheme;
 import com.kotcrab.vis.editor.converter.vis025.module.SupportGsonModule;
 import com.kotcrab.vis.editor.module.project.*;
@@ -122,7 +123,7 @@ public class ConvertTask extends SteppedAsyncTask {
 			log("Deleting modules/version.json");
 			outVisFolder.child("modules/version.json").delete();
 			log("Create modules/version.json for VisEditor 0.3.0\n");
-			ProjectVersionModule.getNewJson().toJson(new ProjectVersionDescriptor(20, "0.3.0"), outVisFolder.child("version.json")); //20 is 0.3.0 versionCode
+			ProjectVersionModule.getNewJson().toJson(new ProjectVersionDescriptor(VersionCodes.EDITOR_030, "0.3.0"), outVisFolder.child("version.json"));
 
 			log("Deleting project.data");
 			outVisFolder.child("project.data").delete();
