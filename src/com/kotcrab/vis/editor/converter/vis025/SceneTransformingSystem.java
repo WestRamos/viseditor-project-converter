@@ -7,11 +7,11 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.artemis.utils.Bag;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.kotcrab.vis.editor.converter.vis025.support.editor.component.PixelsPerUnit;
-import com.kotcrab.vis.editor.converter.vis025.support.editor.component.SpriterProperties;
-import com.kotcrab.vis.editor.converter.vis025.support.editor.component.VisUUID;
-import com.kotcrab.vis.editor.converter.vis025.support.editor.scene.EntityScheme;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.*;
+import com.kotcrab.vis.editor.converter.support.vis030.editor.component.PixelsPerUnit;
+import com.kotcrab.vis.editor.converter.support.vis030.editor.component.SpriterProperties;
+import com.kotcrab.vis.editor.converter.support.vis030.editor.component.VisUUID;
+import com.kotcrab.vis.editor.converter.support.vis030.editor.scene.EntityScheme;
+import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.*;
 import com.kotcrab.vis.editor.converter.vis025.transformer.*;
 import com.kotcrab.vis.editor.entity.ExporterDropsComponent;
 import com.kotcrab.vis.editor.entity.PixelsPerUnitComponent;
@@ -35,6 +35,12 @@ public class SceneTransformingSystem extends EntityProcessingSystem {
 		super(Aspect.getEmpty());
 		this.task = task;
 		setPassive(true);
+
+		transformers.put(SpriteComponent.class, new SpriteTransformer());
+		transformers.put(TextComponent.class, new TextTransformer());
+		transformers.put(SoundComponent.class, new SoundTransformer());
+		transformers.put(MusicComponent.class, new MusicTransformer());
+		transformers.put(ParticleComponent.class, new ParticleTransformer());
 
 		transformers.put(PointComponent.class, new PointTransformer());
 		transformers.put(AssetComponent.class, new AssetTransformer());

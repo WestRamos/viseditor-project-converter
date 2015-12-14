@@ -2,7 +2,7 @@ package com.kotcrab.vis.editor.converter.vis025.transformer;
 
 import com.artemis.Entity;
 import com.artemis.utils.Bag;
-import com.kotcrab.vis.editor.converter.vis025.support.runtime.component.Transform;
+import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.Transform;
 import com.kotcrab.vis.editor.entity.EditorPositionComponent;
 import com.kotcrab.vis.runtime.component.MusicComponent;
 import com.kotcrab.vis.runtime.component.SoundComponent;

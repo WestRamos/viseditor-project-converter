@@ -14,6 +14,7 @@ import com.kotcrab.vis.ui.util.dialog.DialogUtils;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 /** @author Kotcrab */
@@ -33,7 +34,7 @@ public class ConvertTask extends SteppedAsyncTask {
 	private PrintWriter logFileWriter;
 	private PrintWriter errorLogFileWriter;
 
-	private boolean errorOccured = false;
+	private boolean errorOccurred = false;
 
 	public ConvertTask (ProjectModuleContainer projectMC, FileHandle outputFolder) {
 		super("ProjectConverterTask");
@@ -52,9 +53,6 @@ public class ConvertTask extends SteppedAsyncTask {
 			logFile = new File(outputFolder.file(), "conversion-log.txt");
 			logFile.createNewFile();
 			logFileWriter = new PrintWriter(new FileWriter(logFile, true));
-			errorLogFile = new File(outputFolder.file(), "conversion-error-log.txt");
-			errorLogFile.createNewFile();
-			errorLogFileWriter = new PrintWriter(new FileWriter(errorLogFile, true));
 
 			log("VisEditor ProjectConverter " + ProjectConverterPlugin.VERSION);
 			log("Converting from 0.2.5/0.2.6 to 0.3.0");
@@ -95,6 +93,8 @@ public class ConvertTask extends SteppedAsyncTask {
 			log();
 
 			log("Update project files");
+			nextStep();
+			setMessage("Updating project files...");
 
 			FileHandle outVisFolder;
 
@@ -103,12 +103,12 @@ public class ConvertTask extends SteppedAsyncTask {
 			else //project generic
 				outVisFolder = outputFolder;
 
+			log("Deleting modules/supportDescriptor.json");
 			outVisFolder.child("modules/supportDescriptor.json").delete();
+			log("Deleting modules/version.json");
 			outVisFolder.child("modules/version.json").delete(); //TODO recreate version file
+			log("Deleting modules/.sceneBackup");
 			outVisFolder.child("modules/.sceneBackup").deleteDirectory();
-
-			nextStep();
-			setMessage("Updating project files...");
 
 			log();
 			log("===================");
@@ -117,9 +117,9 @@ public class ConvertTask extends SteppedAsyncTask {
 
 		} finally {
 			logFileWriter.close();
-			errorLogFileWriter.close();
 
-			if (errorOccured) {
+			if (errorOccurred) {
+				errorLogFileWriter.close();
 				DialogUtils.showOKDialog(stage, "Warning", "There were some problems during converting, please check log.\n" + errorLogFile.getAbsolutePath());
 			}
 		}
@@ -164,7 +164,17 @@ public class ConvertTask extends SteppedAsyncTask {
 	}
 
 	void logError (String msg) {
-		errorOccured = true;
+		try {
+			if (errorLogFile == null) {
+				errorLogFile = new File(outputFolder.file(), "conversion-error-log.txt");
+				errorLogFile.createNewFile();
+				errorLogFileWriter = new PrintWriter(new FileWriter(errorLogFile, true));
+			}
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
+
+		errorOccurred = true;
 		logFileWriter.println("**ERROR**: " + msg);
 		errorLogFileWriter.println(msg);
 	}
