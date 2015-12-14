@@ -2,7 +2,6 @@ package com.kotcrab.vis.editor.converter.vis025.transformer;
 
 import com.artemis.Component;
 import com.artemis.Entity;
-import com.artemis.utils.Bag;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.kotcrab.vis.editor.converter.support.vis030.editor.component.PixelsPerUnit;
@@ -11,6 +10,7 @@ import com.kotcrab.vis.editor.converter.support.vis030.editor.component.VisUUID;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.*;
 import com.kotcrab.vis.editor.converter.vis025.ConvertTask;
 import com.kotcrab.vis.editor.entity.*;
+import com.kotcrab.vis.editor.plugin.api.support.ComponentTransformer;
 import com.kotcrab.vis.runtime.component.*;
 
 /** @author Kotcrab */
@@ -50,7 +50,7 @@ public class ExporterDropsComponentTransformer extends ComponentTransformer<Expo
 	}
 
 	@Override
-	public void transform (Entity entity, Bag<Component> sourceComponents, Array<Component> components, ExporterDropsComponent component) {
+	public void transform (Entity entity, Array<Component> components, ExporterDropsComponent component) {
 		ExporterDropsComponent newComponent = new ExporterDropsComponent();
 
 		for (Class clazz : component.componentsToDrop) {

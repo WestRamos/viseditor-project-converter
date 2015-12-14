@@ -17,6 +17,8 @@ import com.kotcrab.vis.editor.entity.ExporterDropsComponent;
 import com.kotcrab.vis.editor.entity.PixelsPerUnitComponent;
 import com.kotcrab.vis.editor.entity.SpriterPropertiesComponent;
 import com.kotcrab.vis.editor.entity.UUIDComponent;
+import com.kotcrab.vis.editor.plugin.api.support.ComponentTransformer;
+import com.kotcrab.vis.editor.plugin.api.support.ConditionalComponentTransformer;
 import com.kotcrab.vis.runtime.component.*;
 
 /** @author Kotcrab */
@@ -24,7 +26,7 @@ public class SceneTransformingSystem extends EntityProcessingSystem {
 	private ConvertTask task;
 
 	private ObjectMap<Class, ComponentTransformer> transformers = new ObjectMap<>();
-	private Array<ConditionalComponentTransformers> condTransformers = new Array<>();
+	private Array<ConditionalComponentTransformer> condTransformers = new Array<>();
 
 	private Bag<Component> sourceComponents = new Bag<>();
 
@@ -41,6 +43,7 @@ public class SceneTransformingSystem extends EntityProcessingSystem {
 		transformers.put(SoundComponent.class, new SoundTransformer());
 		transformers.put(MusicComponent.class, new MusicTransformer());
 		transformers.put(ParticleComponent.class, new ParticleTransformer());
+		transformers.put(SpriterComponent.class, new SpriterTransformer());
 
 		transformers.put(PointComponent.class, new PointTransformer());
 		transformers.put(AssetComponent.class, new AssetTransformer());
@@ -83,7 +86,7 @@ public class SceneTransformingSystem extends EntityProcessingSystem {
 			ComponentTransformer transformer = transformers.get(component.getClass());
 
 			if (transformer == null) {
-				for (ConditionalComponentTransformers condTransformer : condTransformers) {
+				for (ConditionalComponentTransformer condTransformer : condTransformers) {
 					if (condTransformer.getSourceComponentClass().equals(component.getClass()) && condTransformer.accept(entity, sourceComponents)) {
 						transformer = condTransformer;
 					}
@@ -92,7 +95,7 @@ public class SceneTransformingSystem extends EntityProcessingSystem {
 
 			if (transformer != null) {
 				task.log("\tComponent: " + component.getClass().getSimpleName() + ", using " + transformer.getClass().getSimpleName());
-				transformer.transform(entity, sourceComponents, targetComponents, component);
+				transformer.transform(entity, targetComponents, component);
 			} else {
 				task.logError("\tMissing transformer for type: " + component.getClass().getSimpleName());
 			}

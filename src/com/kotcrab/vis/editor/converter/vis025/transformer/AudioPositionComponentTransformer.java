@@ -6,11 +6,12 @@ import com.artemis.utils.Bag;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.Transform;
 import com.kotcrab.vis.editor.entity.EditorPositionComponent;
+import com.kotcrab.vis.editor.plugin.api.support.ConditionalComponentTransformer;
 import com.kotcrab.vis.runtime.component.MusicComponent;
 import com.kotcrab.vis.runtime.component.SoundComponent;
 
 /** @author Kotcrab */
-public class AudioPositionComponentTransformer extends ConditionalComponentTransformers<EditorPositionComponent> {
+public class AudioPositionComponentTransformer extends ConditionalComponentTransformer<EditorPositionComponent> {
 	@Override
 	public Class getSourceComponentClass () {
 		return EditorPositionComponent.class;
@@ -22,7 +23,7 @@ public class AudioPositionComponentTransformer extends ConditionalComponentTrans
 	}
 
 	@Override
-	public void transform (Entity entity, Bag<Component> sourceComponents, Array<Component> components, EditorPositionComponent pos) {
+	public void transform (Entity entity, Array<Component> components, EditorPositionComponent pos) {
 		Transform transform = new Transform();
 		transform.setPosition(pos.x, pos.y);
 		components.add(transform);
