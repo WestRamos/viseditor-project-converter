@@ -16,6 +16,8 @@
 
 package com.kotcrab.vis.editor.converter.support.vis030.runtime.assets;
 
+import com.kotcrab.vis.runtime.assets.PathAsset;
+
 /** @author Kotcrab */
 public class SoundAsset extends PathAsset {
 	@Deprecated

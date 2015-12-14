@@ -20,9 +20,9 @@ import com.kotcrab.vis.editor.converter.support.vis030.editor.component.PixelsPe
 import com.kotcrab.vis.editor.converter.support.vis030.editor.component.SpriterProperties;
 import com.kotcrab.vis.editor.converter.support.vis030.editor.component.VisUUID;
 import com.kotcrab.vis.editor.converter.support.vis030.editor.scene.EditorLayer;
+import com.kotcrab.vis.editor.converter.support.vis030.editor.scene.EntityScheme;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.util.json.JsonTagRegistrar;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.util.json.RuntimeJsonTags;
-import com.kotcrab.vis.editor.entity.EntityScheme;
 import com.kotcrab.vis.editor.entity.ExporterDropsComponent;
 
 /** @author Kotcrab */

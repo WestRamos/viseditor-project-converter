@@ -17,7 +17,7 @@
 package com.kotcrab.vis.editor.converter.support.vis030.runtime.component.proto;
 
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.Shader;
-import com.kotcrab.vis.editor.converter.support.vis030.runtime.assets.ShaderAsset;
+import com.kotcrab.vis.runtime.assets.ShaderAsset;
 import com.kotcrab.vis.runtime.assets.VisAssetDescriptor;
 import com.kotcrab.vis.runtime.util.StoresAssetDescriptor;
 

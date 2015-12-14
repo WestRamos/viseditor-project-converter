@@ -19,9 +19,9 @@ package com.kotcrab.vis.editor.converter.support.vis030.runtime.component;
 import com.artemis.Component;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.proto.ProtoComponent;
-import com.kotcrab.vis.editor.converter.support.vis030.runtime.assets.ShaderAsset;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.proto.ProtoShader;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.properties.UsesProtoComponent;
+import com.kotcrab.vis.runtime.assets.ShaderAsset;
 import com.kotcrab.vis.runtime.assets.VisAssetDescriptor;
 import com.kotcrab.vis.runtime.util.StoresAssetDescriptor;
 

@@ -3,6 +3,7 @@ package com.kotcrab.vis.editor.converter.vis025.transformer;
 import com.artemis.Component;
 import com.artemis.Entity;
 import com.artemis.utils.Bag;
+import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.Origin;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.Tint;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.Transform;
@@ -12,7 +13,7 @@ import com.kotcrab.vis.runtime.component.TextComponent;
 /** @author Kotcrab */
 public class TextTransformer extends ComponentTransformer<TextComponent> {
 	@Override
-	public void transform (Entity entity, Bag<Component> sourceComponents, Bag<Component> components, TextComponent text) {
+	public void transform (Entity entity, Bag<Component> sourceComponents, Array<Component> components, TextComponent text) {
 		Transform transform = new Transform();
 		Origin origin = new Origin();
 		Tint tint = new Tint();

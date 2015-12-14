@@ -20,6 +20,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
+import com.kotcrab.vis.editor.scene.Layer;
 import com.kotcrab.vis.editor.util.BaseObservable;
 import com.kotcrab.vis.runtime.data.PhysicsSettings;
 import com.kotcrab.vis.runtime.scene.SceneViewport;
@@ -61,6 +62,28 @@ public class EditorScene extends BaseObservable {
 	private IntMap<String> groupIds = new IntMap<>();
 
 	private Array<EntityScheme> schemes; //for serialization
+
+	public EditorScene (com.kotcrab.vis.editor.scene.EditorScene oldScene, Array<EntityScheme> schemes) {
+		this.path = oldScene.path;
+		this.width = oldScene.width;
+		this.height = oldScene.height;
+		this.pixelsPerUnit = oldScene.pixelsPerUnit;
+		this.viewport = oldScene.viewport;
+		this.physicsSettings = oldScene.physicsSettings;
+
+		this.activeLayerId = oldScene.getActiveLayerId();
+		this.groupIds = oldScene.getGroups();
+
+		for (Layer layer : oldScene.getLayers()) {
+			EditorLayer newLayer = new EditorLayer(layer.name, layer.id);
+			newLayer.locked = layer.locked;
+			newLayer.visible = layer.visible;
+			newLayer.cordsSystem = layer.cordsSystem;
+			this.layers.add(newLayer);
+		}
+
+		this.schemes = schemes;
+	}
 
 	public EditorScene (FileHandle file, SceneViewport viewport, float width, float height, int pixelsPerUnit) {
 		if (width < 0 || height < 0) throw new IllegalArgumentException("Invalid scene size");

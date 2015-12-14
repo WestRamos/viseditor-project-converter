@@ -28,7 +28,7 @@ public class SceneTransformingSystem extends EntityProcessingSystem {
 
 	private Bag<Component> sourceComponents = new Bag<>();
 
-	private Bag<Component> targetComponents = new Bag<>();
+	private Array<Component> targetComponents = new Array<>();
 	private Array<EntityScheme> results = new Array<>();
 
 	public SceneTransformingSystem (ConvertTask task) {
@@ -60,13 +60,14 @@ public class SceneTransformingSystem extends EntityProcessingSystem {
 		transformers.put(UUIDComponent.class, new RemapTransformer(VisUUID.class));
 		transformers.put(PixelsPerUnitComponent.class, new RemapTransformer(PixelsPerUnit.class));
 		transformers.put(SpriterPropertiesComponent.class, new RemapTransformer(SpriterProperties.class));
-		transformers.put(ExporterDropsComponent.class, new DoNothingTransformer());
+
+		transformers.put(ExporterDropsComponent.class, new ExporterDropsComponentTransformer(task));
 
 		condTransformers.add(new AudioPositionComponentTransformer());
 	}
 
 	public Array<EntityScheme> convertScene () {
-		results.clear();
+		results = new Array<>();
 		process();
 		return results;
 	}
@@ -90,13 +91,15 @@ public class SceneTransformingSystem extends EntityProcessingSystem {
 			}
 
 			if (transformer != null) {
-				task.log("\tComponent : " + component.getClass().getSimpleName() + ", using " + transformer.getClass().getSimpleName());
+				task.log("\tComponent: " + component.getClass().getSimpleName() + ", using " + transformer.getClass().getSimpleName());
 				transformer.transform(entity, sourceComponents, targetComponents, component);
 			} else {
 				task.logError("\tMissing transformer for type: " + component.getClass().getSimpleName());
 			}
 		}
 
-		results.add(new EntityScheme(targetComponents));
+		Array<Component> arrayClone = new Array<>(targetComponents.size);
+		arrayClone.addAll(targetComponents);
+		results.add(new EntityScheme(arrayClone));
 	}
 }

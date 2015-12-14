@@ -16,9 +16,12 @@
 
 package com.kotcrab.vis.editor.converter.support.vis030.runtime.util.json;
 
-import com.kotcrab.vis.editor.converter.support.vis030.runtime.assets.*;
+import com.kotcrab.vis.editor.converter.support.vis030.runtime.assets.MusicAsset;
+import com.kotcrab.vis.editor.converter.support.vis030.runtime.assets.ParticleAsset;
+import com.kotcrab.vis.editor.converter.support.vis030.runtime.assets.SoundAsset;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.*;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.proto.*;
+import com.kotcrab.vis.runtime.assets.*;
 import com.kotcrab.vis.runtime.scene.LayerCordsSystem;
 import com.kotcrab.vis.runtime.scene.SceneViewport;
 

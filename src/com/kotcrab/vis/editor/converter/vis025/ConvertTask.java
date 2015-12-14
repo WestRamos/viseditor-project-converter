@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.kotcrab.vis.editor.converter.support.vis030.editor.scene.EntityScheme;
+import com.kotcrab.vis.editor.converter.vis025.module.SupportGsonModule;
 import com.kotcrab.vis.editor.module.project.*;
 import com.kotcrab.vis.editor.module.scene.SceneModuleContainer;
 import com.kotcrab.vis.editor.scene.EditorScene;
+import com.kotcrab.vis.editor.util.FileUtils;
 import com.kotcrab.vis.editor.util.SteppedAsyncTask;
 import com.kotcrab.vis.runtime.util.EntityEngine;
 import com.kotcrab.vis.runtime.util.EntityEngineConfiguration;
@@ -28,6 +31,8 @@ public class ConvertTask extends SteppedAsyncTask {
 	private SceneCacheModule sceneCache;
 	private FileAccessModule fileAccess;
 	private Stage stage;
+
+	private SupportGsonModule gsonModule;
 
 	private File logFile;
 	private File errorLogFile;
@@ -63,20 +68,35 @@ public class ConvertTask extends SteppedAsyncTask {
 
 			calculateSteps();
 
-//		if (project instanceof ProjectLibGDX) {
-//			String root = ((ProjectLibGDX) project).getRoot();
-//			FileHandle[] files = Gdx.files.absolute(root).list();
-//			for (FileHandle file : files) {
-//				String fileName = file.name();
-//				if (fileName.equals("vis")) continue;
-//
-//				nextStep();
-//				setMessage("Copying existing resources... (" + fileName + ")");
-//				log("Copy " + file.path());
-//				file.copyTo(outputFolder.child(fileName));
-//			}
-//		}
+			if (project instanceof ProjectLibGDX) {
+				String root = ((ProjectLibGDX) project).getRoot();
+				FileHandle[] files = Gdx.files.absolute(root).list();
+				for (FileHandle file : files) {
+					String fileName = file.name();
 
+					nextStep();
+					setMessage("Copying existing resources... (" + fileName + ")");
+					log("Copy " + file.path());
+					file.copyTo(outputFolder.child(fileName));
+				}
+			}
+
+			FileHandle outVisFolder;
+
+			if (project instanceof ProjectLibGDX)
+				outVisFolder = outputFolder.child("vis");
+			else //project generic
+				outVisFolder = outputFolder;
+
+			log();
+			log("Delete assets/scenes/*.scene (will be reconverted)");
+			FileUtils.streamRecursively(outVisFolder.child("assets/scene"), file -> {
+				if (file.extension().equals("scene")) {
+					log("Delete " + file.path());
+					file.delete();
+				}
+				return false;
+			});
 			log();
 
 			for (FileHandle scene : sceneFiles) {
@@ -86,27 +106,31 @@ public class ConvertTask extends SteppedAsyncTask {
 
 				setMessage("Converting scene " + fileName + "...");
 				log("Convert scene: " + fileName);
-				convertScene(scene);
+				convertScene(outVisFolder, scene);
 				log();
 			}
 
 			log();
 
-			log("Update project files");
+			log("Update project files\n");
 			nextStep();
 			setMessage("Updating project files...");
 
-			FileHandle outVisFolder;
-
-			if (project instanceof ProjectLibGDX)
-				outVisFolder = outputFolder.child("vis");
-			else //project generic
-				outVisFolder = outputFolder;
-
-			log("Deleting modules/supportDescriptor.json");
+			log("Deleting modules/supportDescriptor.json\n");
 			outVisFolder.child("modules/supportDescriptor.json").delete();
+
 			log("Deleting modules/version.json");
-			outVisFolder.child("modules/version.json").delete(); //TODO recreate version file
+			outVisFolder.child("modules/version.json").delete();
+			log("Create modules/version.json for VisEditor 0.3.0\n");
+			ProjectVersionModule.getNewJson().toJson(new ProjectVersionDescriptor(20, "0.3.0"), outVisFolder.child("version.json")); //20 is 0.3.0 versionCode
+
+			log("Deleting project.data");
+			outVisFolder.child("project.data").delete();
+			log("Create project.json for VisEditor 0.3.0\n");
+			FileWriter writer = new FileWriter(outVisFolder.child("project.json").file());
+			gsonModule.getCommonGson().toJson(project, writer);
+			writer.close();
+
 			log("Deleting modules/.sceneBackup");
 			outVisFolder.child("modules/.sceneBackup").deleteDirectory();
 
@@ -125,7 +149,7 @@ public class ConvertTask extends SteppedAsyncTask {
 		}
 	}
 
-	private void convertScene (FileHandle sceneFile) {
+	private void convertScene (FileHandle outVisFolder, FileHandle sceneFile) {
 		//all scene will be closed at this point
 		executeOnOpenGL(() -> {
 			EditorScene scene = sceneCache.get(sceneFile);
@@ -136,7 +160,22 @@ public class ConvertTask extends SteppedAsyncTask {
 			EntityEngine engine = new EntityEngine(config);
 			SceneModuleContainer.populateEngine(engine, scene);
 			engine.process();
-			sceneTransforming.process();
+			Array<EntityScheme> results = sceneTransforming.convertScene();
+
+			com.kotcrab.vis.editor.converter.support.vis030.editor.scene.EditorScene convertedScene =
+					new com.kotcrab.vis.editor.converter.support.vis030.editor.scene.EditorScene(scene, results);
+
+			try {
+				FileHandle file = outVisFolder.child(fileAccess.relativizeToVisFolder(sceneFile));
+				file.parent().mkdirs();
+				log("Save converted scene " + file.path());
+
+				FileWriter writer = new FileWriter(file.file());
+				gsonModule.getCommonGson().toJson(convertedScene, writer);
+				writer.close();
+			} catch (IOException e) {
+				throw new IllegalStateException(e);
+			}
 		});
 	}
 
@@ -163,7 +202,7 @@ public class ConvertTask extends SteppedAsyncTask {
 		logFileWriter.println();
 	}
 
-	void logError (String msg) {
+	public void logError (String msg) {
 		try {
 			if (errorLogFile == null) {
 				errorLogFile = new File(outputFolder.file(), "conversion-error-log.txt");
