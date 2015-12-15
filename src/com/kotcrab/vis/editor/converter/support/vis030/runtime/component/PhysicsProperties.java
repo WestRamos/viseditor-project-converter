@@ -55,7 +55,6 @@ public class PhysicsProperties extends Component {
 	@ATProperty(fieldName = "Auto Adjust Origin")
 	public boolean adjustOrigin = true;
 
-	//TODO: maskBits and categoryBits support in editor
 	public short maskBits = -1;
 	public short categoryBits = 0x0001;
 }

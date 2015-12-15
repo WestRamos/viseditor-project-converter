@@ -24,7 +24,6 @@ import com.kotcrab.vis.runtime.util.StoresAssetDescriptor;
  * Holds entity asset descriptor
  * @author Kotcrab
  */
-//TODO: support generic asset component to avoid casting?
 public class AssetReference extends Component implements StoresAssetDescriptor {
 	public VisAssetDescriptor asset;
 

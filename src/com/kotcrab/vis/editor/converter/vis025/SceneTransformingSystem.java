@@ -7,6 +7,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.artemis.utils.Bag;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.kotcrab.vis.editor.VersionCodes;
 import com.kotcrab.vis.editor.converter.support.vis030.editor.component.PixelsPerUnit;
 import com.kotcrab.vis.editor.converter.support.vis030.editor.component.SpriterProperties;
 import com.kotcrab.vis.editor.converter.support.vis030.editor.component.VisUUID;
@@ -17,8 +18,11 @@ import com.kotcrab.vis.editor.entity.ExporterDropsComponent;
 import com.kotcrab.vis.editor.entity.PixelsPerUnitComponent;
 import com.kotcrab.vis.editor.entity.SpriterPropertiesComponent;
 import com.kotcrab.vis.editor.entity.UUIDComponent;
+import com.kotcrab.vis.editor.module.editor.ExtensionStorageModule;
+import com.kotcrab.vis.editor.plugin.api.ComponentTransformerProvider;
 import com.kotcrab.vis.editor.plugin.api.support.ComponentTransformer;
 import com.kotcrab.vis.editor.plugin.api.support.ConditionalComponentTransformer;
+import com.kotcrab.vis.editor.plugin.api.support.RemapTransformer;
 import com.kotcrab.vis.runtime.component.*;
 
 /** @author Kotcrab */
@@ -33,7 +37,7 @@ public class SceneTransformingSystem extends EntityProcessingSystem {
 	private Array<Component> targetComponents = new Array<>();
 	private Array<EntityScheme> results = new Array<>();
 
-	public SceneTransformingSystem (ConvertTask task) {
+	public SceneTransformingSystem (ConvertTask task, ExtensionStorageModule extensionStorage) {
 		super(Aspect.getEmpty());
 		this.task = task;
 		setPassive(true);
@@ -64,9 +68,19 @@ public class SceneTransformingSystem extends EntityProcessingSystem {
 		transformers.put(PixelsPerUnitComponent.class, new RemapTransformer(PixelsPerUnit.class));
 		transformers.put(SpriterPropertiesComponent.class, new RemapTransformer(SpriterProperties.class));
 
-		transformers.put(ExporterDropsComponent.class, new ExporterDropsComponentTransformer(task));
+		ExporterDropsComponentTransformer exporterDropsTransformer = new ExporterDropsComponentTransformer(task);
+		transformers.put(ExporterDropsComponent.class, exporterDropsTransformer);
 
 		condTransformers.add(new AudioPositionComponentTransformer());
+
+		for (ComponentTransformerProvider provider : extensionStorage.getComponentTransformerProviders()) {
+			if (provider.getSourceProjectVersions() == VersionCodes.EDITOR_026 && provider.getTargetProjectVersions() == VersionCodes.EDITOR_030) {
+				provider.registerTransformers(transformers);
+				provider.registerConditionalTransformers(condTransformers);
+
+				provider.registerClassMaps(exporterDropsTransformer.getClassMap());
+			}
+		}
 	}
 
 	public Array<EntityScheme> convertScene () {

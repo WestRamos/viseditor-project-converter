@@ -57,7 +57,8 @@ public class ClassJsonSerializer implements JsonSerializer<Class<?>>, JsonDeseri
 		if (shortName != null)
 			return shortName;
 		else
-			return clazz.getName();
+			return clazz.getName()
+					.replace("com.kotcrab.vis.plugin.spine.support.vis030", "com.kotcrab.vis.plugin.spine.components"); //hacky way for fixing spine support
 	}
 
 	private Class<?> getFullClassName (String name) throws ClassNotFoundException {

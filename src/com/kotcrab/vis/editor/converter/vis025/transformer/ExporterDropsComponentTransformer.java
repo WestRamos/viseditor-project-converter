@@ -20,33 +20,40 @@ public class ExporterDropsComponentTransformer extends ComponentTransformer<Expo
 	private ObjectMap<Class, Class> classMap = new ObjectMap<>();
 
 	public ExporterDropsComponentTransformer (ConvertTask task) {
+		register(TextComponent.class, VisText.class);
+		register(SoundComponent.class, VisSound.class);
+		register(MusicComponent.class, VisMusic.class);
+		register(ParticleComponent.class, VisParticle.class);
+		register(SpriterComponent.class, VisSprite.class);
+		register(SpriteComponent.class, VisSprite.class);
+		register(IDComponent.class, VisID.class);
+		register(GroupComponent.class, VisGroup.class);
+		register(VariablesComponent.class, Variables.class);
+		register(ShaderComponent.class, Shader.class);
+		register(RenderableComponent.class, Renderable.class);
+		register(PolygonComponent.class, VisPolygon.class);
+		register(PointComponent.class, Point.class);
+		register(PhysicsSpriteComponent.class, PhysicsSprite.class);
+		register(PhysicsPropertiesComponent.class, PhysicsPropertiesComponent.class);
+		register(PhysicsComponent.class, PhysicsBody.class);
+		register(LayerComponent.class, Layer.class);
+		register(InvisibleComponent.class, Invisible.class);
+		register(AssetComponent.class, AssetReference.class);
 
-		classMap.put(TextComponent.class, VisText.class);
-		classMap.put(SoundComponent.class, VisSound.class);
-		classMap.put(MusicComponent.class, VisMusic.class);
-		classMap.put(ParticleComponent.class, VisParticle.class);
-		classMap.put(SpriterComponent.class, VisSprite.class);
-		classMap.put(SpriteComponent.class, VisSprite.class);
-		classMap.put(IDComponent.class, VisID.class);
-		classMap.put(GroupComponent.class, VisGroup.class);
-		classMap.put(VariablesComponent.class, Variables.class);
-		classMap.put(ShaderComponent.class, Shader.class);
-		classMap.put(RenderableComponent.class, Renderable.class);
-		classMap.put(PolygonComponent.class, VisPolygon.class);
-		classMap.put(PointComponent.class, Point.class);
-		classMap.put(PhysicsSpriteComponent.class, PhysicsSprite.class);
-		classMap.put(PhysicsPropertiesComponent.class, PhysicsPropertiesComponent.class);
-		classMap.put(PhysicsComponent.class, PhysicsBody.class);
-		classMap.put(LayerComponent.class, Layer.class);
-		classMap.put(InvisibleComponent.class, Invisible.class);
-		classMap.put(AssetComponent.class, AssetReference.class);
-
-		classMap.put(UUIDComponent.class, VisUUID.class);
-		classMap.put(PixelsPerUnitComponent.class, PixelsPerUnit.class);
-		classMap.put(SpriterPropertiesComponent.class, SpriterProperties.class);
-		classMap.put(EditorPositionComponent.class, Transform.class);
+		register(UUIDComponent.class, VisUUID.class);
+		register(PixelsPerUnitComponent.class, PixelsPerUnit.class);
+		register(SpriterPropertiesComponent.class, SpriterProperties.class);
+		register(EditorPositionComponent.class, Transform.class);
 
 		this.task = task;
+	}
+
+	void register (Class sourceClass, Class targetClass) {
+		classMap.put(sourceClass, targetClass);
+	}
+
+	public ObjectMap<Class, Class> getClassMap () {
+		return classMap;
 	}
 
 	@Override

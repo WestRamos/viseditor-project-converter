@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.kotcrab.vis.editor.VersionCodes;
 import com.kotcrab.vis.editor.converter.support.vis030.editor.scene.EntityScheme;
 import com.kotcrab.vis.editor.converter.vis025.module.SupportGsonModule;
+import com.kotcrab.vis.editor.module.editor.ExtensionStorageModule;
 import com.kotcrab.vis.editor.module.project.*;
 import com.kotcrab.vis.editor.module.scene.SceneModuleContainer;
 import com.kotcrab.vis.editor.scene.EditorScene;
@@ -31,6 +33,7 @@ public class ConvertTask extends SteppedAsyncTask {
 
 	private SceneCacheModule sceneCache;
 	private FileAccessModule fileAccess;
+	private ExtensionStorageModule extensionStorage;
 	private Stage stage;
 
 	private SupportGsonModule gsonModule;
@@ -41,6 +44,8 @@ public class ConvertTask extends SteppedAsyncTask {
 	private PrintWriter errorLogFileWriter;
 
 	private boolean errorOccurred = false;
+
+	private ClassLoader mainClassLoader;
 
 	public ConvertTask (ProjectModuleContainer projectMC, FileHandle outputFolder) {
 		super("ProjectConverterTask");
@@ -113,27 +118,30 @@ public class ConvertTask extends SteppedAsyncTask {
 
 			log();
 
-			log("Update project files\n");
+			log("Update project files");
 			nextStep();
 			setMessage("Updating project files...");
 
-			log("Deleting modules/supportDescriptor.json\n");
+			log("Deleting modules/supportDescriptor.json");
 			outVisFolder.child("modules/supportDescriptor.json").delete();
 
 			log("Deleting modules/version.json");
 			outVisFolder.child("modules/version.json").delete();
-			log("Create modules/version.json for VisEditor 0.3.0\n");
-			ProjectVersionModule.getNewJson().toJson(new ProjectVersionDescriptor(VersionCodes.EDITOR_030, "0.3.0"), outVisFolder.child("version.json"));
+			log("Create modules/version.json for VisEditor 0.3.0");
+			ProjectVersionModule.getNewJson().toJson(new ProjectVersionDescriptor(VersionCodes.EDITOR_030, "0.3.0"), outVisFolder.child("modules/version.json"));
 
 			log("Deleting project.data");
 			outVisFolder.child("project.data").delete();
-			log("Create project.json for VisEditor 0.3.0\n");
+			log("Create project.json for VisEditor 0.3.0");
 			FileWriter writer = new FileWriter(outVisFolder.child("project.json").file());
 			gsonModule.getCommonGson().toJson(project, writer);
 			writer.close();
 
 			log("Deleting modules/.sceneBackup");
 			outVisFolder.child("modules/.sceneBackup").deleteDirectory();
+
+			log("Create modules/assetsMetadata.json");
+			createMetadata(outVisFolder.child("modules/assetsMetadata.json"));
 
 			log();
 			log("===================");
@@ -150,13 +158,46 @@ public class ConvertTask extends SteppedAsyncTask {
 		}
 	}
 
+	private void createMetadata (FileHandle file) throws IOException {
+		ObjectMap<String, String> metadata = new ObjectMap<>();
+
+		FileUtils.streamDirectoriesRecursively(fileAccess.getAssetsFolder(), dir -> {
+			String relativePath = fileAccess.relativizeToAssetsFolder(dir);
+
+			if (relativePath.startsWith("music")) {
+				log("\tSave " + relativePath + " as music");
+				metadata.put(relativePath + "/", "com.kotcrab.vis.editor.directory.Music");
+			}
+
+			if (relativePath.startsWith("sound")) {
+				log("\tSave " + relativePath + " as sound");
+				metadata.put(relativePath + "/", "com.kotcrab.vis.editor.directory.Sound");
+			}
+
+			if (relativePath.startsWith("spine")) {
+				log("\tSave " + relativePath + " as Spine");
+				metadata.put(relativePath + "/", "com.kotcrab.vis.editor.plugin.spine.directory.Spine");
+			}
+
+			if (relativePath.startsWith("spriter") && dir.parent().equals(fileAccess.getAssetsFolder())) {
+				log("\tSave " + relativePath + " as Spriter");
+				metadata.put(relativePath + "/", "com.kotcrab.vis.editor.directory.Spriter");
+
+			}
+		});
+
+		FileWriter writer = new FileWriter(file.file());
+		gsonModule.getCommonGson().toJson(metadata, writer);
+		writer.close();
+	}
+
 	private void convertScene (FileHandle outVisFolder, FileHandle sceneFile) {
 		//all scene will be closed at this point
 		executeOnOpenGL(() -> {
 			EditorScene scene = sceneCache.get(sceneFile);
 
 			EntityEngineConfiguration config = new EntityEngineConfiguration();
-			SceneTransformingSystem sceneTransforming = new SceneTransformingSystem(this);
+			SceneTransformingSystem sceneTransforming = new SceneTransformingSystem(this, extensionStorage);
 			config.setSystem(sceneTransforming);
 			EntityEngine engine = new EntityEngine(config);
 			SceneModuleContainer.populateEngine(engine, scene);

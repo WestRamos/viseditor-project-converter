@@ -34,7 +34,7 @@ public class ConversionDialog extends VisWindow {
 
 		VisTable pathTable = new VisTable(true);
 		pathTable.add(new VisLabel("Output folder"));
-		pathTable.add(pathField = new VisValidatableTextField("F:\\Poligon\\Converter")).width(300); //TODO remove debug path
+		pathTable.add(pathField = new VisValidatableTextField()).width(300);
 		pathTable.add(chooseButton = new VisTextButton("Choose..."));
 
 		VisTable buttonTable = new VisTable(true);
@@ -48,7 +48,7 @@ public class ConversionDialog extends VisWindow {
 
 		FormValidator validator = new FormValidator(convertButton, errorLabel);
 		validator.notEmpty(pathField, "Output folder cannot be empty!");
-		validator.directory(pathField, "Selected folder is not a directory!");
+		validator.directory(pathField, "Selected folder is not a directory or does not exist!");
 		validator.directoryEmpty(pathField, "Selected directory is not empty!");
 
 		convertButton.addListener(new VisChangeListener((changeEvent, actor) -> {

@@ -59,7 +59,6 @@ public class SupportGsonModule extends EditorModule implements ContainerExtensio
 				.registerTypeAdapter(Class.class, classSerializer = new ClassJsonSerializer(Thread.currentThread().getContextClassLoader()))
 				.registerTypeAdapter(AssetReference.class, new AssetComponentSerializer());
 
-		//TODO: [plugin] plugin entry point, allow plugin to simpler serializer registration, currently requires making EditorEntitySupport
 		//register plugins serializers
 //		extensionStorage.getEntitiesSupports().forEach(
 //				support -> support.getJsonTypeAdapters().forEach(
