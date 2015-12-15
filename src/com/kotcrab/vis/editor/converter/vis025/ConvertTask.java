@@ -174,12 +174,12 @@ public class ConvertTask extends SteppedAsyncTask {
 				metadata.put(relativePath + "/", "com.kotcrab.vis.editor.directory.Sound");
 			}
 
-			if (relativePath.startsWith("spine")) {
+			if (relativePath.startsWith("spine") && dir.parent().equals(fileAccess.getAssetsFolder())) {
 				log("\tSave " + relativePath + " as Spine");
 				metadata.put(relativePath + "/", "com.kotcrab.vis.editor.plugin.spine.directory.Spine");
 			}
 
-			if (relativePath.startsWith("spriter") && dir.parent().equals(fileAccess.getAssetsFolder())) {
+			if (relativePath.startsWith("spriter") && dir.parent().equals(fileAccess.getAssetsFolder()) == false) {
 				log("\tSave " + relativePath + " as Spriter");
 				metadata.put(relativePath + "/", "com.kotcrab.vis.editor.directory.Spriter");
 

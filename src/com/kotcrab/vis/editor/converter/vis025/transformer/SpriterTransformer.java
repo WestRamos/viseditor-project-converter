@@ -3,6 +3,7 @@ package com.kotcrab.vis.editor.converter.vis025.transformer;
 import com.artemis.Component;
 import com.artemis.Entity;
 import com.badlogic.gdx.utils.Array;
+import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.Transform;
 import com.kotcrab.vis.editor.converter.support.vis030.runtime.component.proto.ProtoVisSpriter;
 import com.kotcrab.vis.editor.plugin.api.support.ComponentTransformer;
 import com.kotcrab.vis.runtime.component.SpriterComponent;
@@ -20,6 +21,11 @@ public class SpriterTransformer extends ComponentTransformer<SpriterComponent> {
 		spriter.flipX = component.isFlipX();
 		spriter.flipY = component.isFlipY();
 
+		Transform transform = new Transform();
+		transform.setPosition(component.getX(), component.getY());
+		transform.setRotation(component.getRotation());
+
+		components.add(transform);
 		components.add(spriter);
 	}
 }
