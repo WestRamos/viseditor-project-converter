@@ -85,6 +85,15 @@ public class ConvertTask extends SteppedAsyncTask {
 					log("Copy " + file.path());
 					file.copyTo(outputFolder.child(fileName));
 				}
+			} else {
+				for (FileHandle file : project.getVisDirectory().list()) {
+					String fileName = file.name();
+
+					nextStep();
+					setMessage("Copying existing resources... (" + fileName + ")");
+					log("Copy " + file.path());
+					file.copyTo(outputFolder.child(fileName));
+				}
 			}
 
 			FileHandle outVisFolder;
@@ -227,6 +236,8 @@ public class ConvertTask extends SteppedAsyncTask {
 		if (project instanceof ProjectLibGDX) {
 			String root = ((ProjectLibGDX) project).getRoot();
 			steps = Gdx.files.absolute(root).list().length - 1; //-1 because it should not count vis folder
+		} else {
+			steps = project.getAssetOutputDirectory().list().length;
 		}
 
 		steps += sceneFiles.size;

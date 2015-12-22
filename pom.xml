@@ -7,12 +7,12 @@
         <artifactId>vis-parent</artifactId>
         <groupId>com.kotcrab.vis</groupId>
         <version>1.1.2</version>
-        <relativePath>../../Parent/pom.xml</relativePath>
+        <relativePath>../VisSceneEditor/Parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>vis-editor-project-converter</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
+    <version>1.1</version>
     <name>VisEditor ProjectConverter Plugin</name>
 
     <properties>
@@ -92,14 +92,14 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>vis-runtime</artifactId>
-            <version>0.2.6-SNAPSHOT</version>
+            <version>0.2.6</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>vis-editor</artifactId>
-            <version>0.2.6-SNAPSHOT</version>
+            <version>0.2.6</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
